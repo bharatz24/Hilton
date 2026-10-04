@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#04070D">
 <link rel="canonical" href="https://www.hiltonrenewables.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hilton Renewables —Powering a Greener Future">
+<meta property="og:title" content="Hilton Renewables — Powering a Greener Future">
 <meta property="og:description" content="Smart solar solutions for a sustainable tomorrow. Turnkey solar EPC, installation &amp; commissioning, O&amp;M and material supply.">
 <meta property="og:url" content="https://www.hiltonrenewables.com/">
 <meta property="og:image" content="assets/img/farm-sunset.webp">
@@ -79,7 +79,7 @@
   <a href="#solutions">Solar Solutions</a>
   <a href="#projects">Projects</a>
   <a href="#clients">Clients</a>
-  <a href="#calculator">Calculator</a>
+  <a href="#modal-calc" data-modal="modal-calc">Calculator</a>
   <a href="#consultation">Consultation</a>
   <a href="#catalog">Catalog</a>
   <a href="#contact">Contact Us</a>
@@ -94,11 +94,20 @@
 <section class="film" id="home" data-film="a" aria-label="From sunlight to the solar farm">
   <div class="film__stage">
     <canvas class="film__canvas" id="filmCanvas" width="1280" height="720" aria-hidden="true"></canvas>
-    <img class="film__canvas film__poster" id="filmPoster" src="assets/img/film-poster.jpg" alt="The sun seen in close detail">
+    <img class="film__canvas film__poster" id="filmPoster" src="assets/img/film-poster.jpg" alt="Earth seen from space, the opening frame of the film">
     <div class="film__glow" aria-hidden="true"></div>
     <div class="film__vignette" aria-hidden="true"></div>
 
     <div class="cap cap--hero" id="cap1">
+      <div class="sun" aria-hidden="true">
+        <span class="sun__corona"></span>
+        <span class="sun__rays"></span>
+        <span class="sun__streak"></span>
+        <span class="sun__core"></span>
+        <span class="sun__ghost sun__ghost--a"></span>
+        <span class="sun__ghost sun__ghost--b"></span>
+        <span class="sun__ghost sun__ghost--c"></span>
+      </div>
       <div class="inner">
         <div class="hero-kicker">
           <span class="chip"><i></i>Solar EPC</span>
@@ -132,6 +141,48 @@
     </div>
 
     <div class="cap cap--right cap--bright" id="cap4">
+      <svg class="turbines" viewBox="0 0 420 212" fill="currentColor"
+        aria-hidden="true" focusable="false" preserveAspectRatio="xMinYMax meet">
+        <defs>
+          <linearGradient id="turbGround" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="currentColor" stop-opacity="0"/>
+            <stop offset=".22" stop-color="currentColor" stop-opacity=".34"/>
+            <stop offset=".74" stop-color="currentColor" stop-opacity=".26"/>
+            <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line class="turb__ground" x1="0" y1="191" x2="420" y2="191"/>
+    <g transform="translate(62 108.0) scale(0.52)" opacity="0.26">
+      <path class="turb__tower" d="M-3.4 0 L3.4 0 L2 150 L-2 150 Z"/>
+      <rect class="turb__nacelle" x="-7" y="-5" width="14" height="10" rx="5"/>
+      <g class="turb__rotor">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+          from="0 0 0" to="360 0 0" dur="11.5s" repeatCount="indefinite"/>
+        <path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(0)"/><path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(120)"/><path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(240)"/>
+        <circle cx="0" cy="0" r="3.6"/>
+      </g>
+    </g>
+    <g transform="translate(188 75.0) scale(0.78)" opacity="0.52">
+      <path class="turb__tower" d="M-3.4 0 L3.4 0 L2 150 L-2 150 Z"/>
+      <rect class="turb__nacelle" x="-7" y="-5" width="14" height="10" rx="5"/>
+      <g class="turb__rotor">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+          from="0 0 0" to="360 0 0" dur="7.2s" repeatCount="indefinite"/>
+        <path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(0)"/><path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(120)"/><path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(240)"/>
+        <circle cx="0" cy="0" r="3.6"/>
+      </g>
+    </g>
+    <g transform="translate(322 93.5) scale(0.63)" opacity="0.36">
+      <path class="turb__tower" d="M-3.4 0 L3.4 0 L2 150 L-2 150 Z"/>
+      <rect class="turb__nacelle" x="-7" y="-5" width="14" height="10" rx="5"/>
+      <g class="turb__rotor">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+          from="0 0 0" to="360 0 0" dur="9.1s" repeatCount="indefinite"/>
+        <path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(0)"/><path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(120)"/><path d="M0 -5 C 3 -28 3 -64 1.2 -88 C .8 -95 -.8 -95 -1.2 -88 C -3 -64 -3 -28 0 -5 Z" transform="rotate(240)"/>
+        <circle cx="0" cy="0" r="3.6"/>
+      </g>
+    </g>
+      </svg>
       <div class="inner">
         <p class="eyebrow">04 — At Scale</p>
         <h2 class="display d2" style="margin-top:14px">Built as<br>Infrastructure</h2>
@@ -154,57 +205,11 @@
   </div>
 </section>
 
-<!-- ============ 02 — PRODUCT REVEAL FILM (exploded module) ============ -->
-<section class="film film--b" id="module" data-film="b" aria-label="Solar module architecture">
-  <div class="film__stage">
-    <canvas class="film__canvas" id="filmCanvasB" width="1120" height="630" aria-hidden="true"></canvas>
-    <img class="film__canvas film__poster" id="filmPosterB" src="assets/img/film2-poster.jpg" alt="Photovoltaic module rendered in darkness" loading="lazy">
-    <div class="film__glow" aria-hidden="true"></div>
-    <div class="film__vignette" aria-hidden="true"></div>
-
-    <div class="cap cap--right" id="capB1">
-      <div class="inner">
-        <p class="eyebrow">06 — Module Architecture</p>
-        <h2 class="display d2" style="margin-top:14px">Engineered for<br>Performance</h2>
-        <p class="lead" style="margin-top:16px">Designed for efficiency, durability and long-term generation.</p>
-        <ul class="layers" id="layerList">
-          <li data-at="0.22"><span>Tempered Front Glass</span><b>01</b></li>
-          <li data-at="0.26"><span>Photovoltaic Cells</span><b>02</b></li>
-          <li data-at="0.30"><span>EVA Encapsulant</span><b>03</b></li>
-          <li data-at="0.34"><span>Back Sheet</span><b>04</b></li>
-          <li data-at="0.38"><span>Anodised Aluminium Frame</span><b>05</b></li>
-          <li data-at="0.42"><span>Junction Box &amp; Bypass Diodes</span><b>06</b></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="cap cap--right" id="capB2">
-      <div class="inner">
-        <p class="eyebrow">07 — Cell Level</p>
-        <h2 class="display d2" style="margin-top:14px">Precision in<br>Every Cell</h2>
-        <p class="lead" style="margin-top:16px">Multi-busbar interconnection, with minimal resistive loss.</p>
-        <div class="specs">
-          <span class="chip">Mono / Poly / Bifacial</span>
-          <span class="chip">String &amp; Central Inverters</span>
-          <span class="chip">SCADA Ready</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cap" id="capB3">
-      <div class="inner" style="text-align:center;max-width:900px;margin:0 auto">
-        <h2 class="display d2">Built to Last<br>Decades in the Field</h2>
-        <p class="lead" style="margin:18px auto 0;text-align:center">Sealed, framed, tested — then maintained for decades.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 03 — ENERGY FLOW ============ -->
+<!-- ============ 02 — ENERGY FLOW ============ -->
 <section class="energy" id="energy" aria-label="From sunlight to power">
   <div class="energy__stage">
     <div class="energy__head">
-      <p class="eyebrow">08 — Energy Pathway</p>
+      <p class="eyebrow">06 — Energy Pathway</p>
       <h2 class="display d2">From Sunlight<br>to Power</h2>
     </div>
     <div class="energy__svgwrap">
@@ -295,11 +300,11 @@
   </div>
 </section>
 
-<!-- ============ 04 — SOLUTIONS ============ -->
+<!-- ============ 03 — SOLUTIONS ============ -->
 <section class="section solutions" id="solutions">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow rv">09 — Capabilities</p>
+      <p class="eyebrow rv">07 — Capabilities</p>
       <h2 class="display d2 rv">Solar Solutions</h2>
       <p class="lead rv">One partner across the full lifecycle.</p>
     </div>
@@ -394,11 +399,11 @@
   </div>
 </section>
 
-<!-- ============ 05 — EPC STORY ============ -->
+<!-- ============ 04 — EPC STORY ============ -->
 <section class="section epc" id="epc">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow rv">10 — Project Journey</p>
+      <p class="eyebrow rv">08 — Project Journey</p>
       <h2 class="display d2 rv">Solar EPC,<br>Step by Step</h2>
     </div>
 
@@ -428,86 +433,127 @@
   </div>
 </section>
 
-<!-- ============ 06 — SOLAR FARM ============ -->
+<!-- ============ 05 — SOLAR FARM ============ -->
 <section class="farm" id="farm" aria-label="Large scale solar infrastructure">
   <div class="farm__stage">
     <img class="farm__img" id="farmImg" src="assets/img/farm-sunset.webp" alt="Aerial view of a large solar farm at sunset" loading="lazy">
     <div class="farm__scrim" aria-hidden="true"></div>
     <div class="farm__copy">
-      <p class="eyebrow rv" style="justify-content:center">11 — Scale</p>
+      <p class="eyebrow rv" style="justify-content:center">09 — Scale</p>
       <h2 class="display d2 rv" style="margin-top:16px">Building the Energy<br>Infrastructure of Tomorrow</h2>
       <p class="lead rv">The same engineering discipline at every size.</p>
     </div>
-    <div class="farm__stats">
-      <div><b>ISO 9001</b><span>Quality</span></div>
-      <div><b>ISO 45001</b><span>Safety</span></div>
-      <div><b>ISO 14001</b><span>Environment</span></div>
+    <div class="farm__certs">
+      <p class="farm__certs-k">Certified management systems &mdash; independently audited</p>
+      <ul class="certs">
+      <li class="cert">
+        <button class="cert__btn" type="button" data-modal="modal-cert"
+          data-cert="assets/img/cert-9001.webp"
+          data-cert-std="ISO 9001:2015" data-cert-sys="Quality Management" data-cert-no="QCC/273E/0525"
+          aria-label="View the ISO 9001:2015 certificate">
+          <img class="cert__thumb" src="assets/img/cert-9001-t.webp" alt=""
+            width="320" height="453" loading="lazy" decoding="async">
+          <span class="cert__txt">
+            <b>ISO 9001:2015</b>
+            <span>Quality Management</span>
+            <em>QCC/273E/0525 &middot; Valid to 02 May 2028</em>
+          </span>
+          <svg class="cert__go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+        </button>
+      </li>
+      <li class="cert">
+        <button class="cert__btn" type="button" data-modal="modal-cert"
+          data-cert="assets/img/cert-45001.webp"
+          data-cert-std="ISO 45001:2018" data-cert-sys="Occupational Health &amp; Safety" data-cert-no="QCC/E25D/0525"
+          aria-label="View the ISO 45001:2018 certificate">
+          <img class="cert__thumb" src="assets/img/cert-45001-t.webp" alt=""
+            width="320" height="453" loading="lazy" decoding="async">
+          <span class="cert__txt">
+            <b>ISO 45001:2018</b>
+            <span>Occupational Health &amp; Safety</span>
+            <em>QCC/E25D/0525 &middot; Valid to 02 May 2028</em>
+          </span>
+          <svg class="cert__go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+        </button>
+      </li>
+      <li class="cert">
+        <button class="cert__btn" type="button" data-modal="modal-cert"
+          data-cert="assets/img/cert-14001.webp"
+          data-cert-std="ISO 14001:2015" data-cert-sys="Environmental Management" data-cert-no="QCC/E25A/0525"
+          aria-label="View the ISO 14001:2015 certificate">
+          <img class="cert__thumb" src="assets/img/cert-14001-t.webp" alt=""
+            width="320" height="453" loading="lazy" decoding="async">
+          <span class="cert__txt">
+            <b>ISO 14001:2015</b>
+            <span>Environmental Management</span>
+            <em>QCC/E25A/0525 &middot; Valid to 02 May 2028</em>
+          </span>
+          <svg class="cert__go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+        </button>
+      </li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ============ ABOUT / MANIFESTO ============ -->
-<section class="section manifesto on-light" id="about">
-  <div class="wrap">
-    <p class="eyebrow rv">12 — About Hilton Renewables</p>
-    <p class="manifesto__text" id="manifesto" style="margin-top:22px">A solar EPC and material supply company delivering turnkey power — from approvals and engineering to commissioning and long-term maintenance.</p>
-    <div class="grid manifesto__grid">
-      <div class="rv"><i></i><h4>Founded on engineering</h4><p>Founded by Shashikant Solanki.</p></div>
-      <div class="rv"><i></i><h4>Certified systems</h4><p>ISO 9001:2015 · 45001:2018 · 14001:2015.</p></div>
-      <div class="rv"><i></i><h4>Backed by Hilton Infotech</h4><p>Networking, security and administrative support.</p></div>
-      <div class="rv"><i></i><h4>Two offices in Gujarat</h4><p>Ahmedabad head office · Amreli branch.</p></div>
+<!-- ============ ABOUT ============ -->
+<section class="section about on-light" id="about">
+  <div class="wrap about__inner">
+    <div class="about__lede">
+      <p class="eyebrow rv">10 &mdash; About Hilton Renewables</p>
+      <h2 class="display d2 rv" id="manifesto">Turnkey solar, engineered end to end.</h2>
+      <p class="lead rv">From approvals and engineering through commissioning, and on into the
+        maintenance years that decide what a plant actually returns.</p>
+      <a class="btn btn--ghost magnetic rv" href="#consultation"><span>Talk to an engineer</span></a>
     </div>
+
+    <dl class="about__spec rv">
+      <div><dt>Founded by</dt><dd>Shashikant Solanki</dd></div>
+      <div><dt>Certifications</dt><dd>ISO 9001:2015 &middot; ISO 45001:2018 &middot; ISO 14001:2015</dd></div>
+      <div><dt>Group</dt><dd>Backed by Hilton Infotech &mdash; IT, networking and administration</dd></div>
+      <div><dt>Offices</dt><dd>Ahmedabad head office &middot; Amreli branch</dd></div>
+      <div><dt>Divisions</dt><dd>Residential &middot; Commercial &middot; EPC &middot; O&amp;M &middot; I&amp;C &middot; Trading &middot; Street lights</dd></div>
+    </dl>
   </div>
 </section>
 
-<!-- ============ PARENT COMPANY ============ -->
-<section class="section parentco on-light" id="group" style="background:var(--cloud)">
-  <div class="wrap parentco__inner">
-    <div class="rv">
-      <p class="eyebrow">13 — Supported By</p>
-      <h2 class="display d3" style="margin-top:16px">Hilton Infotech</h2>
-      <p class="lead" style="margin-top:14px">Support that keeps project teams focused on engineering and delivery.</p>
-    </div>
-    <ul class="parentco__list rv">
-      <li><b>IT &amp; Networking</b><span>Systems, connectivity and site communication support</span></li>
-      <li><b>Administration</b><span>Documentation, compliance and back-office capability</span></li>
-      <li><b>Shared Governance</b><span>Common quality, safety and environmental standards</span></li>
-    </ul>
-  </div>
-</section>
 
-<!-- ============ 07 — PERFORMANCE ============ -->
+<!-- ============ PERFORMANCE ============ -->
 <section class="section perf on-light" id="performance" style="background:var(--paper)">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow rv">14 — Performance &amp; Technology</p>
-      <h2 class="display d2 rv">Measured, Monitored,<br>Maintained</h2>
+    <div class="perf__head">
+      <div class="perf__title">
+        <p class="eyebrow rv">11 &mdash; Performance &amp; Technology</p>
+        <h2 class="display d2 rv">Measured, Monitored,<br>Maintained</h2>
+      </div>
+      <p class="lead rv">A plant is only as good as its worst year. Ours are monitored at
+        string level and serviced on schedule.</p>
     </div>
 
-    <div class="grid perf__counters" id="counters">
-      <div class="rv"><b><span class="count" data-to="3">0</span></b><span>ISO Certifications</span></div>
-      <div class="rv"><b><span class="count" data-to="7">0</span></b><span>Service Divisions</span></div>
-      <div class="rv"><b><span class="count" data-to="13">0</span><em>+</em></b><span>Industry Clients</span></div>
-      <div class="rv"><b><span class="count" data-to="25">0</span></b><span>Year Design Horizon</span></div>
-      <div class="rv"><b><span class="count" data-to="2">0</span></b><span>Offices in Gujarat</span></div>
+    <div class="perf__counters rv" id="counters">
+      <div><b><span class="count" data-to="3">0</span></b><span>ISO Certifications</span></div>
+      <div><b><span class="count" data-to="7">0</span></b><span>Service Divisions</span></div>
+      <div><b><span class="count" data-to="13">0</span><em>+</em></b><span>Industry Clients</span></div>
+      <div><b><span class="count" data-to="25">0</span></b><span>Year Design Horizon</span></div>
+      <div><b><span class="count" data-to="2">0</span></b><span>Offices in Gujarat</span></div>
     </div>
 
     <div class="grid perf__tiles">
-      <div class="tile rv"><div class="ic">◆</div><h4>High Efficiency</h4><p>Mono, poly and bifacial modules matched to your load profile.</p></div>
-      <div class="tile rv"><div class="ic">◉</div><h4>Smart Monitoring</h4><p>String-level monitoring with alarms on under-performance.</p></div>
-      <div class="tile rv"><div class="ic">▣</div><h4>Reliable Engineering</h4><p>Structural and electrical work to approved drawings.</p></div>
-      <div class="tile rv"><div class="ic">◈</div><h4>Quality Components</h4><p>Components sourced from established makes only.</p></div>
-      <div class="tile rv"><div class="ic">▲</div><h4>Long-Term Performance</h4><p>Renovation and upgradation keep older assets producing.</p></div>
-      <div class="tile rv"><div class="ic">✦</div><h4>Professional Maintenance</h4><p>AMC: inspection, cleaning, diagnosis, replacement.</p></div>
+      <div class="tile rv"><span class="tile__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><h4>High Efficiency</h4><p>Mono, poly and bifacial modules matched to your load profile.</p></div>
+      <div class="tile rv"><span class="tile__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><h4>Smart Monitoring</h4><p>String-level monitoring with alarms on under-performance.</p></div>
+      <div class="tile rv"><span class="tile__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span><h4>Reliable Engineering</h4><p>Structural and electrical work built to approved drawings.</p></div>
+      <div class="tile rv"><span class="tile__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10.01-3-3"/></svg></span><h4>Quality Components</h4><p>Components sourced from established makes only.</p></div>
+      <div class="tile rv"><span class="tile__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span><h4>Long-Term Performance</h4><p>Renovation and upgradation keep older assets producing.</p></div>
+      <div class="tile rv"><span class="tile__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><h4>Professional Maintenance</h4><p>AMC covering inspection, cleaning, diagnosis and replacement.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ 08 — PROJECTS (horizontal) ============ -->
+<!-- ============ 07 — PROJECTS (horizontal) ============ -->
 <section class="projects" id="projects" aria-label="Project experience">
   <div class="section" style="padding-bottom:0">
     <div class="wrap sec-head">
-      <p class="eyebrow rv">15 — Project Experience</p>
+      <p class="eyebrow rv">12 — Project Experience</p>
       <h2 class="display d2 rv">Work Across<br>Every Scale</h2>
     </div>
   </div>
@@ -527,11 +573,11 @@
   </div>
 </section>
 
-<!-- ============ 09 — CLIENTS ============ -->
+<!-- ============ 08 — CLIENTS ============ -->
 <section class="section clients on-light" id="clients">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow rv">16 — Client Trust</p>
+      <p class="eyebrow rv">13 — Client Trust</p>
       <h2 class="display d2 rv">Trusted by<br>Our Clients</h2>
       <p class="lead rv">Projects executed for industry leaders across India.</p>
     </div>
@@ -557,63 +603,12 @@
   </div>
 </section>
 
-<!-- ============ CALCULATOR + QUOTE ============ -->
-<section class="section tools on-light" id="calculator">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow rv">17 — Plan Your System</p>
-      <h2 class="display d2 rv">Estimate Your<br>Solar Savings</h2>
-      <p class="lead rv">Two steps, one minute. Your estimate carries straight into the quotation.</p>
-    </div>
-
-    <div class="grid launch">
-      <button type="button" class="launch__card rv" data-modal="modal-calc" data-track="calculator_opened">
-        <span class="launch__ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <rect x="4" y="2.5" width="16" height="19" rx="2.6"/>
-            <rect x="7.2" y="5.6" width="9.6" height="3.8" rx="1"/>
-            <g fill="currentColor" stroke="none">
-              <circle cx="8.6" cy="13.2" r="1.05"/><circle cx="12" cy="13.2" r="1.05"/><circle cx="15.4" cy="13.2" r="1.05"/>
-              <circle cx="8.6" cy="17.2" r="1.05"/><circle cx="12" cy="17.2" r="1.05"/>
-            </g>
-            <path d="M14.3 17.2h2.2"/>
-          </svg>
-        </span>
-        <span class="launch__body">
-          <b>Calculate Savings</b>
-          <em>Indicative capacity, monthly generation and savings from your electricity bill.</em>
-        </span>
-        <span class="launch__go" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>
-        </span>
-      </button>
-
-      <button type="button" class="launch__card rv" data-modal="modal-quote" data-track="get_quote_clicked">
-        <span class="launch__ic" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M14 2.6H7.2a2.2 2.2 0 0 0-2.2 2.2v14.4a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V7.6z"/>
-            <path d="M14 2.6v5h5"/><path d="M8.6 12.6h6.8M8.6 16.2h4.4"/>
-          </svg>
-        </span>
-        <span class="launch__body">
-          <b>Get a Free Quote</b>
-          <em>A solar engineer prepares a costed proposal for your site.</em>
-        </span>
-        <span class="launch__go" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>
-        </span>
-      </button>
-    </div>
-
-    <p class="tools__foot rv">Prefer to talk it through? <a href="#consultation">Book a free consultation</a> instead.</p>
-  </div>
-</section>
 
 <!-- ============ CONSULTATION ============ -->
 <section class="section consult on-light" id="consultation">
   <div class="wrap consult__inner">
     <div class="sec-head rv">
-      <p class="eyebrow rv">18 — Talk to an Engineer</p>
+      <p class="eyebrow rv">14 — Talk to an Engineer</p>
       <h2 class="display d2">Book a Free<br>Consultation</h2>
       <p class="lead">A solar engineer reviews your site and comes back with a practical scope.</p>
       <ul class="consult__points">
@@ -622,6 +617,25 @@
         <li>Indicative capacity and scope</li>
         <li>Approvals and net-metering guidance</li>
       </ul>
+      <a class="consult__calc rv" href="#modal-calc" data-modal="modal-calc"
+        data-track="calculator_opened">
+        <span class="consult__calc-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2.5" width="16" height="19" rx="2.6"/>
+            <rect x="7.2" y="5.6" width="9.6" height="3.8" rx="1"/>
+            <path d="M8.6 13.2h.01M12 13.2h.01M15.4 13.2h.01M8.6 17.2h.01M12 17.2h.01M15.4 17.2h.01"/>
+          </svg>
+        </span>
+        <span class="consult__calc-txt">
+          <b>Estimate your savings first</b>
+          <em>Indicative capacity and monthly savings from your electricity bill &mdash; about a minute.</em>
+        </span>
+        <span class="consult__calc-go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>
+        </span>
+      </a>
     </div>
 
     <div class="card rv">
@@ -693,10 +707,10 @@
   </div>
 </section>
 
-<!-- ============ 10 — CATALOG ============ -->
+<!-- ============ 09 — CATALOG ============ -->
 <section class="section catalog on-light" id="catalog">
   <div class="wrap">
-    <p class="eyebrow rv" style="justify-content:center">19 — Product Catalog</p>
+    <p class="eyebrow rv" style="justify-content:center">15 — Product Catalog</p>
     <h2 class="display d2 rv">Explore Our<br>Solar Products</h2>
     <p class="lead rv">The full supply and installation scope, in one document.</p>
     <div class="catalog__panel" id="catalogPanel">
@@ -709,7 +723,7 @@
   </div>
 </section>
 
-<!-- ============ 11 — FINALE ============ -->
+<!-- ============ 10 — FINALE ============ -->
 <section class="finale" id="finale" aria-label="Powering a greener future">
   <div class="finale__stage">
     <img class="finale__img" id="finaleImg" src="assets/img/farm-sunset.webp" alt="Sunset over a large solar farm" loading="lazy">
@@ -730,7 +744,7 @@
 <section class="section contact" id="contact">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow rv">20 — Contact</p>
+      <p class="eyebrow rv">16 — Contact</p>
       <h2 class="display d2 rv">Talk to a<br>Solar Expert</h2>
     </div>
     <div class="grid contact__grid">
@@ -780,11 +794,12 @@
     <form id="calcForm" class="modal__form" novalidate>
       <div class="modal__body" data-lenis-prevent>
         <div class="fgrid">
-          <div class="f f--full">
+          <div class="f f--full f--lead">
             <label for="bill">Monthly Electricity Bill <i>*</i></label>
             <div class="f__ctl"><span class="f__pre">₹</span>
               <input type="number" id="bill" name="bill" inputmode="numeric" min="500" max="1000000" step="100" placeholder="5,000" required>
             </div>
+            <p class="f__hint">Your average monthly bill — the estimate is built from it.</p>
             <span class="err" id="err-bill"></span>
           </div>
           <div class="f">
@@ -805,15 +820,31 @@
             <div class="f__ctl"><input type="text" id="city" name="city" placeholder="Ahmedabad" required></div>
             <span class="err" id="err-city"></span>
           </div>
-          <div class="f">
-            <label for="pin">PIN Code <span class="f__opt">optional</span></label>
-            <div class="f__ctl"><input type="text" id="pin" name="pin" inputmode="numeric" pattern="[1-9][0-9]{5}" placeholder="380058"></div>
-            <span class="err" id="err-pin"></span>
-          </div>
-          <div class="f">
+          <div class="f f--full">
             <label for="roof">Roof Area <span class="f__opt">optional</span></label>
             <div class="f__ctl"><input type="number" id="roof" name="roof" inputmode="numeric" min="50" step="10" placeholder="1,000"><span class="f__suf">sq.ft.</span></div>
             <span class="err" id="err-roof"></span>
+          </div>
+          <div class="f f--full cap-f">
+            <label for="capIn">Security Check <i>*</i></label>
+            <div class="cap-row">
+              <div class="cap-art">
+                <canvas id="capCanvas" width="320" height="96" role="img"
+                  aria-label="Security code, five characters"></canvas>
+              </div>
+              <button type="button" class="cap-new" id="capNew" aria-label="Show a different code">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>
+                </svg>
+              </button>
+              <div class="f__ctl">
+                <input type="text" id="capIn" name="captcha" maxlength="5" required
+                  autocomplete="off" autocapitalize="characters" spellcheck="false"
+                  placeholder="Enter the code">
+              </div>
+            </div>
+            <span class="err" id="err-cap"></span>
           </div>
         </div>
 
@@ -931,6 +962,29 @@
   </aside>
 </div>
 
+
+<!-- certificate viewer -->
+<div class="modal modal--view" id="modal-cert" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="certStd">
+  <div class="modal__scrim" data-close></div>
+  <div class="modal__panel certview">
+    <img class="certview__img" id="certImg" src="" alt="" decoding="async">
+    <div class="certview__bar">
+      <div class="certview__meta">
+        <b id="certStd">Certificate</b>
+        <span id="certSys"></span>
+        <em id="certNo"></em>
+      </div>
+      <div class="certview__act">
+        <a class="btn btn--ghost" id="certVerify" href="https://qccertification.com/Client.aspx" target="_blank"
+           rel="noopener noreferrer" data-track="certificate_verified"><span>Verify with issuer</span></a>
+        <button class="certview__x" type="button" data-close aria-label="Close certificate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 </main>
 
 <!-- ============ FOOTER ============ -->
@@ -950,7 +1004,7 @@
     </div>
     <div>
       <h5>Quick Links</h5>
-      <ul><li><a href="#calculator">Calculator</a></li><li><a href="#modal-quote" data-modal="modal-quote">Get Quote</a></li><li><a href="#consultation">Consultation</a></li><li><a href="#catalog">Catalog</a></li><li><a href="#contact">Contact</a></li></ul>
+      <ul><li><a href="#modal-calc" data-modal="modal-calc">Calculator</a></li><li><a href="#modal-quote" data-modal="modal-quote">Get Quote</a></li><li><a href="#consultation">Consultation</a></li><li><a href="#catalog">Catalog</a></li><li><a href="#contact">Contact</a></li></ul>
     </div>
     <div>
       <h5>Connect</h5>
@@ -969,7 +1023,7 @@
 </footer>
 
 <nav class="fab" aria-label="Quick actions">
-  <a class="fab__btn" href="#calculator" data-modal="modal-calc" data-track="calculator_opened" aria-label="Calculate Savings">
+  <a class="fab__btn" href="#modal-calc" data-modal="modal-calc" data-track="calculator_opened" aria-label="Calculate Savings">
     <span class="fab__label" aria-hidden="true">Calculate Savings</span>
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <rect x="4" y="2.5" width="16" height="19" rx="2.6"/>
@@ -993,12 +1047,57 @@
     <span class="fab__label" aria-hidden="true">WhatsApp</span>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2m0 18.2c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2"/></svg>
   </a>
+  <button class="fab__btn fab__btn--chat" id="chatFab" type="button"
+    aria-label="Chat with us" aria-expanded="false" aria-controls="chatPanel"
+    data-track="assistant_opened">
+    <span class="fab__label" aria-hidden="true">Chat with us</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-2.9-.45L4 21l1.4-3.8A8.3 8.3 0 0 1 3.5 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 8.5 8.4z"/>
+      <path d="M8.6 11.5h.01M12 11.5h.01M15.4 11.5h.01"/>
+    </svg>
+  </button>
 </nav>
+
+
+<!-- guided assistant -->
+<section class="chat" id="chatPanel" hidden aria-label="Hilton Renewables assistant">
+  <header class="chat__head">
+    <span class="chat__avatar" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
+        <circle cx="12" cy="12" r="4"/>
+      </svg>
+    </span>
+    <span class="chat__who">
+      <b>Hilton Assistant</b>
+      <em>Five quick questions &mdash; then our team takes over</em>
+    </span>
+    <button type="button" class="chat__x" id="chatClose" aria-label="Close the assistant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+        stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </header>
+
+  <div class="chat__log" id="chatLog" role="log" aria-live="polite" data-lenis-prevent></div>
+
+  <div class="chat__quick" id="chatQuick" hidden></div>
+
+  <form class="chat__bar" id="chatForm" autocomplete="off">
+    <label class="sr-only" for="chatIn">Your answer</label>
+    <input type="text" id="chatIn" placeholder="Type your answer…" autocomplete="off" maxlength="120">
+    <button type="submit" class="chat__send" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h13M12.5 6l6 6-6 6"/></svg>
+    </button>
+  </form>
+</section>
 
 <nav class="mobile-bar" aria-label="Quick actions">
   <a href="tel:+918153980800"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1"/></svg>Call</a>
   <a href="https://wa.me/918153980800" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.3A9 9 0 1 0 12 3"/></svg>WhatsApp</a>
-  <a href="#calculator" data-modal="modal-calc"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h3M8 16h3M15 12v5"/></svg>Calculate</a>
+  <a href="#modal-calc" data-modal="modal-calc"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h3M8 16h3M15 12v5"/></svg>Calculate</a>
   <a href="#modal-quote" data-modal="modal-quote"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg>Enquiry</a>
 </nav>
 

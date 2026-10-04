@@ -10,8 +10,7 @@
 --------------------------------------------------------- */
 const CONFIG = {
   films: {
-    a: { count: 150, dir: 'assets/frames',  eager: 34, canvas: '#filmCanvas',  poster: '#filmPoster',  fillPortrait: true },
-    b: { count: 150, dir: 'assets/frames2', eager: 20, canvas: '#filmCanvasB', poster: '#filmPosterB' }
+    a: { count: 137, start: 13, dir: 'assets/frames',  eager: 34, canvas: '#filmCanvas',  poster: '#filmPoster',  fillPortrait: true }
   },
   whatsapp: '918153980800',
   email: 'Inquiry@hiltonrenewables.com',
@@ -93,7 +92,9 @@ function createFilm(cfg){
   if (!canvas) return f;
   f.ctx = canvas.getContext('2d', { alpha: true });
 
-  f.src = i => `${cfg.dir}/f${String(i + 1).padStart(4, '0')}.webp`;
+  // cfg.start skips the opening frames of the source clip without
+  // renaming anything on disk — index 0 is the film's first shot
+  f.src = i => `${cfg.dir}/f${String(i + 1 + (cfg.start || 0)).padStart(4, '0')}.webp`;
 
   f.load = i => new Promise(res => {
     if (f.images[i] !== undefined) return res();
@@ -192,6 +193,10 @@ function buildFilmScroll(sel, film, caps, opts = {}){
     onEnter: () => film.start()
   });
 
+  // the film scrubs over the section minus one viewport — captions must
+  // use the same range or they drift a whole screen out of step
+  const range = () => Math.max(1, section.offsetHeight - window.innerHeight);
+
   caps.forEach(c => {
     const el = $(c.el);
     if (!el) return;
@@ -199,7 +204,10 @@ function buildFilmScroll(sel, film, caps, opts = {}){
     if (c.hero){
       gsap.to(el, {
         autoAlpha: 0, y: -30, ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top top', end: () => '+=' + (window.innerHeight * 1.1), scrub: .4 }
+        scrollTrigger: { trigger: section, start: 'top top',
+          // a fraction of the film itself, so the hero is always gone
+          // before the next caption arrives, whatever the film's length
+          end: () => '+=' + (range() * 0.16), scrub: .4 }
       });
       return;
     }
@@ -207,8 +215,8 @@ function buildFilmScroll(sel, film, caps, opts = {}){
     gsap.set(inner, { y: 40 });
     ScrollTrigger.create({
       trigger: section,
-      start: () => `top+=${clamp(c.in, 0, 1) * section.offsetHeight} top`,
-      end:   () => `top+=${clamp(c.out, 0, 1) * section.offsetHeight} top`,
+      start: () => `top+=${clamp(c.in, 0, 1) * range()} top`,
+      end:   () => `top+=${clamp(c.out, 0, 1) * range()} top`,
       onEnter:     () => gsap.to([el, inner], { autoAlpha: 1, y: 0, duration: .7, ease: 'power3.out', overwrite: true }),
       onEnterBack: () => gsap.to([el, inner], { autoAlpha: 1, y: 0, duration: .7, ease: 'power3.out', overwrite: true }),
       onLeave:     () => gsap.to(el, { autoAlpha: 0, duration: .45, overwrite: true }),
@@ -220,16 +228,11 @@ function buildFilmScroll(sel, film, caps, opts = {}){
 function buildFilms(){
   buildFilmScroll('#home', films.a, [
     { el: '#cap1', hero: true },
-    { el: '#cap2', in: 0.12, out: 0.30 },
-    { el: '#cap3', in: 0.34, out: 0.50 },
-    { el: '#cap4', in: 0.58, out: 0.76 },
-    { el: '#cap5', in: 0.80, out: 1.02 }
+    { el: '#cap2', in: 0.19, out: 0.36 },   // earth in space
+    { el: '#cap3', in: 0.42, out: 0.60 },   // the descent
+    { el: '#cap4', in: 0.66, out: 0.82 },   // arriving over the array
+    { el: '#cap5', in: 0.86, out: 1.04 }    // the farm
   ]);
-  buildFilmScroll('#module', films.b, [
-    { el: '#capB1', in: 0.05, out: 0.46 },
-    { el: '#capB2', in: 0.50, out: 0.72 },
-    { el: '#capB3', in: 0.78, out: 1.02 }
-  ], { layers: '#layerList li' });
 }
 
 /* ---------------------------------------------------------
@@ -537,21 +540,26 @@ function initChrome(){
     document.body.classList.add('sun-cursor');
     const half = cur.offsetWidth / 2 || 37;
     // 1:1 with the pointer — no easing, so the sun is exactly where you click
-    let cx = -200, cy = -200, pending = null;
-    const paint = () => { pending = null; cur.style.transform = `translate3d(${cx - half}px,${cy - half}px,0)`; };
     const move = e => {
-      cx = e.clientX; cy = e.clientY;
-      if (pending === null) pending = requestAnimationFrame(paint);
+      cur.style.transform = `translate3d(${e.clientX - half}px,${e.clientY - half}px,0)`;
     };
     window.addEventListener('pointermove', move, { passive: true });
     window.addEventListener('pointerdown', () => cur.classList.add('is-down'), { passive: true });
     window.addEventListener('pointerup',   () => cur.classList.remove('is-down'), { passive: true });
-    document.addEventListener('mouseleave', () => { cur.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { cur.style.opacity = '1'; });
+    document.addEventListener('mouseleave', () => cur.classList.add('is-away'));
+    document.addEventListener('mouseenter', () => cur.classList.remove('is-away'));
   }
-  $$('a, button, .sol-card, .hslide, .tile, .cl, input, select, textarea').forEach(el => {
-    el.addEventListener('mouseenter', () => cur && cur.classList.add('is-big'));
-    el.addEventListener('mouseleave', () => cur && cur.classList.remove('is-big'));
+  // the sun hides whenever the pointer is over something clickable
+  const HOT = 'a,button,input,select,textarea,label,summary,[role="button"],' +
+              '[data-modal],[data-close],.launch__card,.tile,.cl,.sol-card,.hslide';
+  document.addEventListener('mouseover', e => {
+    if (cur && e.target.closest && e.target.closest(HOT)) cur.classList.add('is-over');
+  });
+  document.addEventListener('mouseout', e => {
+    if (!cur || !e.target.closest) return;
+    const from = e.target.closest(HOT);
+    const to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(HOT) : null;
+    if (from && !to) cur.classList.remove('is-over');
   });
 
   // magnetic buttons
@@ -620,7 +628,6 @@ function initCalculator(){
     e.preventDefault();
     const bill = parseFloat($('#bill').value);
     const city = $('#city').value.trim();
-    const pin  = $('#pin').value.trim();
     const roof = parseFloat($('#roof').value) || 0;
     const ptype = $('#ptype').value;
     let ok = true;
@@ -635,8 +642,12 @@ function initCalculator(){
     setErr('#err-bill', !bill || bill < CONFIG.calc.billMin || bill > CONFIG.calc.billMax
       ? `Enter a bill between ${inr(CONFIG.calc.billMin)} and ${inr(CONFIG.calc.billMax)}` : '');
     setErr('#err-city', city ? '' : 'City is required');
-    setErr('#err-pin', pin && !/^[1-9][0-9]{5}$/.test(pin) ? 'Enter a valid 6-digit PIN code' : '');
     setErr('#err-roof', roof && roof < 50 ? 'Roof area looks too small' : '');
+    const capIn = $('#capIn');
+    const typed = capIn ? capIn.value.trim().toUpperCase() : '';
+    setErr('#err-cap', !typed ? 'Enter the code shown'
+      : typed !== CAP.code ? 'That code does not match — try the new one' : '');
+    if (typed && typed !== CAP.code){ newCaptcha(); capIn.value = ''; }
     if (!ok) return;
     track('calculator_started', { propertyType: ptype, city });
 
@@ -648,7 +659,7 @@ function initCalculator(){
       try {
         const res = await fetch(CONFIG.api.calculations, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ monthlyBill: bill, propertyType: ptype, city, pinCode: pin, roofAreaSqFt: roof })
+          body: JSON.stringify({ monthlyBill: bill, propertyType: ptype, city, roofAreaSqFt: roof })
         });
         if (res.ok){
           const d = await res.json();
@@ -661,7 +672,7 @@ function initCalculator(){
       } catch (_) { /* fall through to local maths */ }
     }
     if (!r) r = calculate({ bill, ptype, roof });
-    r.city = city; r.pin = pin;
+    r.city = city;
     lastCalc = r;
 
     $('#rKw').textContent   = r.capacityKw + ' kW';
@@ -673,6 +684,7 @@ function initCalculator(){
     $('#rWarn').classList.toggle('on', !!r.roofLimited);
     box.classList.add('on');
     btn.textContent = original;
+    newCaptcha(); if ($('#capIn')) $('#capIn').value = '';
     track('calculator_completed', { capacityKw: r.capacityKw, city, propertyType: ptype });
     ScrollTrigger.refresh();
 
@@ -747,7 +759,7 @@ function initQuote(){
 
     const payload = {
       fullName: name, whatsappNumber: wa.replace(/[\s-]/g, ''), email: mail, city,
-      pinCode: $('#pin')?.value.trim() || '', monthlyElectricityBill: bill,
+      monthlyElectricityBill: bill,
       propertyType: $('#qtype').value, requiredCapacityKw: parseFloat($('#qkw').value) || null,
       roofAreaSqFt: parseFloat($('#qroof').value) || null, message: $('#qmsg').value.trim(),
       leadSource: lastCalc ? 'CALCULATOR' : 'GET_QUOTE',
@@ -854,9 +866,14 @@ function openModal(id, trigger){
   lenis && lenis.stop();
   const panel = el.querySelector('.modal__panel');
   const scrim = el.querySelector('.modal__scrim');
-  const sheet = window.matchMedia('(max-width:860px)').matches;
+  const view = el.classList.contains('modal--view');
+  const sheet = !view && window.matchMedia('(max-width:860px)').matches;
   gsap.killTweensOf([panel, scrim]);
   gsap.to(scrim, { opacity: 1, duration: .35, ease: 'power2.out' });
+  if (view){
+    gsap.fromTo(panel, { x: 0, y: 0, xPercent: 0, yPercent: 0, scale: .94, opacity: 0 },
+      { scale: 1, opacity: 1, duration: .42, ease: 'power3.out' });
+  } else
   // x/y must be pinned to 0: GSAP reads the CSS translate(100%) as a pixel offset
   gsap.fromTo(panel,
     { x: 0, y: 0, xPercent: sheet ? 0 : 100, yPercent: sheet ? 100 : 0 },
@@ -878,7 +895,16 @@ function closeModal(instant){
     el.hidden = true;
     if (!MODAL.open){ document.body.classList.remove('modal-open'); lenis && lenis.start(); }
   };
-  const sheet = window.matchMedia('(max-width:860px)').matches;
+  const view = el.classList.contains('modal--view');
+  const sheet = !view && window.matchMedia('(max-width:860px)').matches;
+  if (view){
+    gsap.to(scrim, { opacity: 0, duration: .28 });
+    if (instant){ gsap.set(panel, { scale: .94, opacity: 0 }); done(); return; }
+    gsap.to(panel, { scale: .96, opacity: 0, duration: .3, ease: 'power2.in', onComplete: done });
+    const b = MODAL.lastFocus;
+    setTimeout(() => b && b.focus && b.focus({ preventScroll: true }), 60);
+    return;
+  }
   if (instant){
     gsap.set(scrim, { opacity: 0 });
     gsap.set(panel, { x: 0, y: 0, xPercent: sheet ? 0 : 100, yPercent: sheet ? 100 : 0 });
@@ -911,6 +937,265 @@ function initModals(){
   });
 }
 
+
+/* ---------------------------------------------------------
+   CERTIFICATE VIEWER — fills the dialog before it opens
+--------------------------------------------------------- */
+function initCerts(){
+  const img = document.getElementById('certImg');
+  if (!img) return;
+  // capture phase, so the dialog already holds the right certificate
+  // by the time the shared [data-modal] handler opens it
+  document.addEventListener('click', e => {
+    const t = e.target.closest && e.target.closest('[data-cert]');
+    if (!t) return;
+    const std = t.dataset.certStd || 'Certificate';
+    img.src = t.dataset.cert;
+    img.alt = std + ' certificate issued to Hilton Renewables';
+    document.getElementById('certStd').textContent = std;
+    document.getElementById('certSys').textContent = t.dataset.certSys || '';
+    document.getElementById('certNo').textContent =
+      (t.dataset.certNo || '') + ' \u00b7 valid to 02 May 2028';
+    track('certificate_viewed', { standard: std });
+  }, true);
+}
+
+
+/* ---------------------------------------------------------
+   SUN — drifts against the pointer, so the opening frame has depth
+--------------------------------------------------------- */
+function initSun(){
+  const sun = document.querySelector('.sun');
+  if (!sun || REDUCED) return;
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  let x = 0, y = 0, queued = 0;
+  const write = () => {
+    queued = 0;
+    sun.style.setProperty('--sx', x.toFixed(1) + 'px');
+    sun.style.setProperty('--sy', y.toFixed(1) + 'px');
+  };
+  window.addEventListener('pointermove', e => {
+    // against the pointer, and gently — the sun is far away
+    x = (e.clientX / window.innerWidth - .5) * -48;
+    y = (e.clientY / window.innerHeight - .5) * -30;
+    if (!queued) queued = requestAnimationFrame(write);
+  }, { passive: true });
+}
+
+
+/* ---------------------------------------------------------
+   SECURITY CHECK — drawn, never written into the DOM
+--------------------------------------------------------- */
+// the ambiguous characters are left out: no O/0, I/1/L, S/5, Z/2, B/8
+const CAP_ALPHABET = 'ACDEFGHJKMNPQRTUVWXY34679';
+const CAP = { code: '' };
+
+function newCaptcha(){
+  const canvas = document.getElementById('capCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  CAP.code = Array.from({ length: 5 },
+    () => CAP_ALPHABET[Math.floor(Math.random() * CAP_ALPHABET.length)]).join('');
+
+  ctx.clearRect(0, 0, W, H);
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#F5F8FB'); bg.addColorStop(1, '#E6EDF4');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  // speckle, then two curves through the glyphs
+  for (let i = 0; i < 90; i++){
+    ctx.fillStyle = `rgba(26,95,200,${rand(.05, .18)})`;
+    ctx.fillRect(rand(0, W), rand(0, H), rand(1, 2.4), rand(1, 2.4));
+  }
+  for (let i = 0; i < 2; i++){
+    ctx.strokeStyle = i ? 'rgba(110,158,76,.34)' : 'rgba(26,95,200,.3)';
+    ctx.lineWidth = rand(1.1, 1.9);
+    ctx.beginPath();
+    ctx.moveTo(0, rand(10, H - 10));
+    ctx.bezierCurveTo(rand(W * .25, W * .4), rand(0, H), rand(W * .6, W * .8), rand(0, H), W, rand(10, H - 10));
+    ctx.stroke();
+  }
+
+  const pad = 16, slot = (W - pad * 2) / CAP.code.length;
+  CAP.code.split('').forEach((ch, i) => {
+    ctx.save();
+    ctx.translate(pad + slot * (i + 0.5), H / 2 + rand(-5, 5));
+    ctx.rotate(rand(-0.34, 0.34));
+    ctx.font = `800 ${rand(42, 54)}px Manrope, system-ui, sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = ['#0C1520', '#13326B', '#1A5FC8', '#3D5A2A'][Math.floor(Math.random() * 4)];
+    ctx.fillText(ch, 0, 0);
+    ctx.restore();
+  });
+}
+
+function initCaptcha(){
+  const canvas = document.getElementById('capCanvas');
+  if (!canvas) return;
+  newCaptcha();
+  const again = document.getElementById('capNew');
+  if (again) again.addEventListener('click', () => {
+    newCaptcha();
+    const input = document.getElementById('capIn');
+    if (input){ input.value = ''; input.focus(); }
+  });
+  // webfonts land after first paint; redraw so the glyphs are the brand face
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(newCaptcha);
+}
+
+
+/* ---------------------------------------------------------
+   GUIDED ASSISTANT — five questions, then a hand-off
+--------------------------------------------------------- */
+const CHAT_STEPS = [
+  { key: 'name', ask: "Hello — I'll take a few details and pass them to an engineer. What's your full name?",
+    valid: v => v.trim().length >= 2, bad: 'Please type your full name.' },
+  { key: 'wa',   ask: ({ name }) => `Thanks ${name.split(' ')[0]}. What's your WhatsApp number?`,
+    valid: v => /^(\+?91[\s-]?)?[6-9][0-9]{9}$/.test(v.replace(/[\s-]/g, '')),
+    bad: 'That does not look like an Indian mobile number — 10 digits, starting 6 to 9.' },
+  { key: 'need', ask: 'What do you need help with?',
+    chips: ['Rooftop solar (home)', 'Commercial / industrial', 'EPC project', 'O&M / AMC', 'Something else'],
+    valid: v => v.trim().length >= 2, bad: 'Pick one, or describe it in a few words.' },
+  { key: 'city', ask: 'Which city is the site in?',
+    chips: ['Ahmedabad', 'Amreli', 'Elsewhere in Gujarat', 'Another state'],
+    valid: v => v.trim().length >= 2, bad: 'Please type the city.' },
+  { key: 'bill', ask: 'Roughly what is the monthly electricity bill? This helps us size the system.',
+    chips: ['Under ₹3,000', '₹3,000 – ₹10,000', '₹10,000 – ₹50,000', 'Over ₹50,000', 'Not sure'],
+    valid: () => true }
+];
+
+const CHAT = { step: 0, answers: {}, done: false, started: false };
+
+function initChat(){
+  const fab   = document.getElementById('chatFab');
+  const panel = document.getElementById('chatPanel');
+  const log   = document.getElementById('chatLog');
+  const quick = document.getElementById('chatQuick');
+  const form  = document.getElementById('chatForm');
+  const input = document.getElementById('chatIn');
+  if (!fab || !panel || !log || !form) return;
+
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+
+  const say = (html, cls = 'msg--bot') => {
+    const el = document.createElement('div');
+    el.className = 'msg ' + cls;
+    el.innerHTML = html;
+    log.appendChild(el); scroll();
+    return el;
+  };
+
+  const think = ms => new Promise(res => {
+    const dots = document.createElement('div');
+    dots.className = 'typing';
+    dots.innerHTML = '<i></i><i></i><i></i>';
+    log.appendChild(dots); scroll();
+    setTimeout(() => { dots.remove(); res(); }, REDUCED ? 60 : ms);
+  });
+
+  const chips = list => {
+    quick.innerHTML = '';
+    if (!list || !list.length){ quick.hidden = true; return; }
+    list.forEach(label => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = label;
+      b.addEventListener('click', () => answer(label));
+      quick.appendChild(b);
+    });
+    quick.hidden = false;
+  };
+
+  const ask = async () => {
+    const step = CHAT_STEPS[CHAT.step];
+    if (!step) return finish();
+    await think(520);
+    say(typeof step.ask === 'function' ? step.ask(CHAT.answers) : step.ask);
+    chips(step.chips);
+    input.placeholder = step.chips ? 'Or type your own…' : 'Type your answer…';
+    input.focus({ preventScroll: true });
+  };
+
+  const answer = async value => {
+    const step = CHAT_STEPS[CHAT.step];
+    if (!step || CHAT.done) return;
+    const v = value.trim();
+    if (!step.valid(v)){
+      form.classList.add('is-bad');
+      await think(320);
+      say(step.bad);
+      return;
+    }
+    form.classList.remove('is-bad');
+    say(escapeHtml(v), 'msg--me');
+    CHAT.answers[step.key] = v;
+    input.value = '';
+    chips(null);
+    CHAT.step++;
+    ask();
+  };
+
+  const finish = async () => {
+    CHAT.done = true;
+    const a = CHAT.answers;
+    const ref = 'HR-AS-' + new Date().getFullYear() + '-' +
+                String(Math.floor(Math.random() * 900000) + 100000);
+    const lines = [
+      'Hello, I would like to discuss a solar system.',
+      `Name: ${a.name}`, `WhatsApp: ${a.wa}`, `Requirement: ${a.need}`,
+      `City: ${a.city}`, `Monthly bill: ${a.bill}`, `Reference: ${ref}`
+    ].join('\n');
+    const wurl = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(lines)}`;
+
+    await think(700);
+    const box = say(
+      `Thank you, <b>${escapeHtml(a.name.split(' ')[0])}</b>. That is everything we need.<br>` +
+      `Our team will contact you on WhatsApp at <b>${escapeHtml(a.wa)}</b> regarding your ` +
+      `${escapeHtml(a.need.toLowerCase())} requirement in ${escapeHtml(a.city)}.` +
+      `<span class="chat__ref">Reference ${ref}</span>` +
+      `<a class="btn btn--blue" href="${wurl}" target="_blank" rel="noopener noreferrer" ` +
+      `data-track="whatsapp_clicked"><span>Send it on WhatsApp now</span></a>`,
+      'msg--bot msg--done');
+    box.scrollIntoView({ block: 'nearest' });
+    form.classList.add('is-done');
+    chips(null);
+    track('assistant_completed', { requirement: a.need, city: a.city, reference: ref });
+  };
+
+  const open = () => {
+    panel.hidden = false;
+    requestAnimationFrame(() => panel.classList.add('is-open'));
+    fab.classList.add('is-on');
+    document.body.classList.add('chat-open');
+    fab.setAttribute('aria-expanded', 'true');
+    if (!CHAT.started){ CHAT.started = true; ask(); }
+    else input.focus({ preventScroll: true });
+    track('assistant_opened', {});
+  };
+  const close = () => {
+    panel.classList.remove('is-open');
+    fab.classList.remove('is-on');
+    document.body.classList.remove('chat-open');
+    fab.setAttribute('aria-expanded', 'false');
+    setTimeout(() => { panel.hidden = true; }, 260);
+    fab.focus({ preventScroll: true });
+  };
+
+  fab.addEventListener('click', () => (panel.hidden ? open() : close()));
+  document.getElementById('chatClose').addEventListener('click', close);
+  form.addEventListener('submit', e => { e.preventDefault(); if (input.value.trim()) answer(input.value); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.hidden && !MODAL.open){ e.preventDefault(); close(); }
+  });
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 /* ---------------------------------------------------------
    BOOT
 --------------------------------------------------------- */
@@ -935,13 +1220,24 @@ function boot(){
     initChrome();
     initCalculator();
     initModals();
+  initCerts();
+  initSun();
+  initCaptcha();
+  initChat();
+
+  // the rotors are SVG animations, which prefers-reduced-motion cannot reach
+  // from CSS — stop them at rest instead
+  if (REDUCED){
+    const farm = document.querySelector('.turbines');
+    if (farm && farm.pauseAnimations) farm.pauseAnimations();
+  }
+
     initQuote();
     initConsultation();
     ScrollTrigger.refresh();
   };
 
   films.a = createFilm(CONFIG.films.a);
-  films.b = createFilm(CONFIG.films.b);
 
   films.a.start(p => {
     const v = Math.round(p * 100);

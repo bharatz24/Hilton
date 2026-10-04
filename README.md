@@ -18,10 +18,6 @@ Pages, S3, IIS, Apache, nginx). Nothing server-side is required.
 
 ## What's on the page
 
-This version uses **two** scroll films. `Hilton Renewebles intro.mp4` drives the
-opening journey (sun → earth → descent through cloud → solar farm → panels) and
-the panel video drives the product reveal below it.
-
 **Note on the source video:** a burned-in yellow "HILTON RENEWABLES" caption
 appears in the original from 5.0 s onward. The frame build stops at 5.0 s so the
 film stays clean, and the brand moment is handled by the site's own logo reveal
@@ -35,7 +31,6 @@ company** block for Hilton Infotech, **nav scroll-spy**, **conversion tracking**
 | # | Section | Technique |
 |---|---------|-----------|
 | 01 | Cinematic hero journey | 150-frame WebP sequence from the intro video, scrubbed on `<canvas>`; 5 chapters: hero → one planet → down to earth → at scale → to the cell |
-| 02 | Module architecture | second 150-frame sequence from `Solar Panel Video.mp4`: exploded layers with callouts, cell macro, sealed module |
 | 03 | From sunlight to power | animated SVG energy path: sun → array → inverter → loads → grid |
 | 05 | Solar Solutions | 7 cinematic cards, 3D tilt on hover |
 | 06 | Solar EPC, step by step | scroll-linked 7-step timeline with synced imagery |
@@ -60,8 +55,7 @@ floating WhatsApp, mobile sticky action bar.
 **Everything configurable lives at the top of `assets/js/main.js` in `CONFIG`:**
 
 ```js
-CONFIG.films.a.count   // hero journey frames in assets/frames  (150)
-CONFIG.films.b.count   // module reveal frames in assets/frames2 (150)
+CONFIG.films.a.count   // hero journey frames in assets/frames (150)
 CONFIG.whatsapp        // WhatsApp number used by every WhatsApp CTA
 CONFIG.email           // fallback email for quotation submissions
 CONFIG.api             // Spring Boot endpoints — see "Backend" below
@@ -126,10 +120,6 @@ the `#group` section when it is confirmed.
 python3 tools/build-frames.py "path/to/Hilton Renewebles intro.mp4" --out frames \
     --fps 30 --width 1280 --quality 76 --max-frames 150 --poster film-poster.jpg
 
-# 02 product reveal (the panel video's last ~25% is a white logo outro,
-#    so it is cut at frame 196 and subsampled to 150)
-python3 tools/build-frames.py "path/to/Solar Panel Video.mp4" --out frames2 \
-    --width 1120 --quality 78 --max-frames 196 --pick 150 --poster film2-poster.jpg
 ```
 
 Each run prints its frame count — put it in the matching `CONFIG.films.*.count`.
@@ -142,10 +132,9 @@ On phones the hero film switches from letterbox to full-bleed automatically
   disabled and every section renders as a static page.
 - Keyboard navigable, visible focus rings, labelled form fields, alt text on
   every image, skip link, semantic landmarks.
-- Total page weight ≈ 17 MB, of which 12.3 MB is the two frame sequences. Only
-  the first 34 frames of the hero film block the preloader (~2 s); the rest
-  stream in the background and the second sequence starts loading only when the
-  reader is roughly one screen away from it.
+- Total page weight ≈ 12 MB, of which 8.6 MB is the hero frame sequence. Only
+  the first 34 frames block the preloader (~2 s); the rest stream in the
+  background.
 - Fonts (Manrope, Inter) are self-hosted woff2, subset to latin.
 
 ## Files
@@ -156,7 +145,6 @@ assets/
   css/style.css        design system + all sections
   js/main.js           scroll engine, calculator, quote form
   frames/f0001…f0150.webp    hero journey (intro video)
-  frames2/f0001…f0150.webp   module reveal (Solar Panel Video.mp4)
   img/                 photography, 3D renders, logo variants
   logos/               client logos
   fonts/               self-hosted woff2
